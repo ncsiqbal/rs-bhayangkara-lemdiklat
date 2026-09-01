@@ -1,69 +1,291 @@
-# CodeIgniter 4 Application Starter
+# Rumah Sakit Bhayangkara Lemdiklat
 
-## What is CodeIgniter?
+Website informasi Rumah Sakit Bhayangkara Lemdiklat yang dilengkapi dengan Admin CMS untuk mengelola informasi dokter, jadwal pelayanan, unit/poli, serta galeri kegiatan rumah sakit.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Tech Stack
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- PHP 8.3
+- CodeIgniter 4
+- MySQL 8
+- Bootstrap 5
+- Bootstrap Icons
+- Font Awesome
+- HTML5
+- CSS3
+- JavaScript
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Features
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### Public Website
 
-## Installation & updates
+- Beranda
+- Jadwal Dokter
+- Filter jadwal dokter berdasarkan poli dan hari
+- Unit / Poli
+- Detail Unit / Poli
+- Galeri Kegiatan
+- Detail kegiatan
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### Admin CMS
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+- Admin Login & Logout
+- Dashboard
+- CRUD Dokter
+- CRUD Jadwal Dokter
+- CRUD Unit / Poli
+- CRUD Galeri
+- Upload foto kegiatan
+- Status aktif / nonaktif
+- Form validation
+- CSRF protection
+- Session-based authentication
 
-## Setup
+## Database
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+Project menggunakan MySQL dengan struktur database:
 
-## Important Change with index.php
+```text
+users
+doctors
+polyclinics
+doctor_schedules
+galleries
+```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Relasi utama:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+```text
+Doctors
+   │
+   └── Doctor Schedules
+             │
+             └── Polyclinics
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## Requirements
 
-## Repository Management
+Pastikan environment sudah memiliki:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+- PHP >= 8.1
+- Composer
+- MySQL
+- Git
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## Installation
 
-## Server Requirements
+### 1. Clone Repository
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+```bash
+git clone https://github.com/ncsiqbal/rs-bhayangkara-lemdiklat.git
+cd rs-bhayangkara-lemdiklat
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+### 2. Install Dependencies
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+```bash
+composer install
+```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+### 3. Setup Environment
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+Copy file environment:
+
+```bash
+cp env .env
+```
+
+Generate encryption key:
+
+```bash
+php spark key:generate
+```
+
+### 4. Setup Database
+
+Buat database MySQL:
+
+```sql
+CREATE DATABASE rs_bhayangkara;
+```
+
+Kemudian buka file `.env` dan sesuaikan konfigurasi:
+
+```env
+database.default.hostname = localhost
+database.default.database = rs_bhayangkara
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.port = 3306
+```
+
+### 5. Run Migration
+
+```bash
+php spark migrate
+```
+
+### 6. Seed Data
+
+Untuk memasukkan data dokter, unit/poli, jadwal dokter, dan galeri:
+
+```bash
+php spark db:seed HospitalSeeder
+```
+
+Untuk membuat akun administrator:
+
+```bash
+php spark db:seed AdminSeeder
+```
+
+> `AdminSeeder` hanya perlu dijalankan pada database yang belum memiliki akun administrator tersebut.
+
+### 7. Run Application
+
+```bash
+php spark serve
+```
+
+Website akan tersedia di:
+
+```text
+http://localhost:8080
+```
+
+Admin panel:
+
+```text
+http://localhost:8080/admin/login
+```
+
+## Admin Account
+
+Akun administrator dibuat menggunakan:
+
+```bash
+php spark db:seed AdminSeeder
+```
+
+Credentials admin dapat dilihat pada:
+
+```text
+app/Database/Seeds/AdminSeeder.php
+```
+
+## Project Structure
+
+```text
+app/
+├── Config/
+│
+├── Controllers/
+│   ├── AdminAuth.php
+│   ├── AdminDashboard.php
+│   ├── AdminDoctors.php
+│   ├── AdminDoctorSchedules.php
+│   ├── AdminGalleries.php
+│   ├── AdminPolyclinics.php
+│   ├── Doctors.php
+│   ├── Galleries.php
+│   ├── Home.php
+│   └── Polyclinics.php
+│
+├── Database/
+│   ├── Migrations/
+│   └── Seeds/
+│
+├── Models/
+│   ├── Doctor.php
+│   ├── DoctorSchedule.php
+│   ├── Gallery.php
+│   ├── Polyclinic.php
+│   └── User.php
+│
+└── Views/
+    ├── admin/
+    ├── doctors/
+    ├── galleries/
+    ├── layouts/
+    ├── polyclinics/
+    └── home.php
+
+public/
+└── uploads/
+    └── gallery/
+```
+
+## Security
+
+Project menerapkan beberapa mekanisme keamanan dasar:
+
+- Password hashing menggunakan PHP password hashing
+- Session-based authentication
+- CSRF protection
+- Input validation
+- File upload validation
+- Admin role validation
+- Environment configuration melalui `.env`
+
+## Main Routes
+
+### Public
+
+| Method | Route | Description |
+|---|---|---|
+| GET | `/` | Beranda |
+| GET | `/jadwal-dokter` | Jadwal dokter |
+| GET | `/unit-poli` | Daftar unit / poli |
+| GET | `/unit-poli/{id}` | Detail unit / poli |
+| GET | `/galeri` | Galeri kegiatan |
+| GET | `/galeri/{id}` | Detail kegiatan |
+
+### Admin
+
+| Method | Route | Description |
+|---|---|---|
+| GET | `/admin/login` | Admin login |
+| GET | `/admin/dashboard` | Dashboard |
+| GET | `/admin/doctors` | Kelola dokter |
+| GET | `/admin/schedules` | Kelola jadwal |
+| GET | `/admin/polyclinics` | Kelola unit / poli |
+| GET | `/admin/galleries` | Kelola galeri |
+
+## Architecture
+
+Project menggunakan pendekatan **MVC (Model-View-Controller)** dari CodeIgniter 4.
+
+```text
+User
+ │
+ ▼
+Routes
+ │
+ ▼
+Controller
+ │
+ ├──── Model ──── Database
+ │
+ ▼
+View
+ │
+ ▼
+Browser
+```
+
+Admin CMS menggunakan controller dan view terpisah dari public website untuk menjaga struktur aplikasi tetap terorganisir.
+
+## Development Notes
+
+Project ini dibuat sebagai technical test untuk posisi IT di Rumah Sakit Bhayangkara Lemdiklat.
+
+Fokus pengembangan:
+
+- Database-driven website
+- Admin Content Management System
+- CRUD management
+- Doctor schedule management
+- Gallery management
+- Responsive interface
+- MVC architecture
+- Basic web security
