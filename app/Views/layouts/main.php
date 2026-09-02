@@ -6,6 +6,12 @@
 
     <title><?= esc($title ?? 'Rumah Sakit Bhayangkara Lemdiklat') ?></title>
 
+    <link
+    rel="icon"
+    type="image/png"
+    href="<?= base_url('assets/img/rs-bhayangkara-favicon.png') ?>"
+    >
+
     <meta
         name="description"
         content="Portal informasi Rumah Sakit Bhayangkara Lemdiklat"
