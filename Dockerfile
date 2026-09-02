@@ -2,8 +2,13 @@ FROM php:8.3-apache
 
 WORKDIR /var/www/html
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql intl \
-    && a2enmod rewrite
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libicu-dev \
+        pkg-config \
+    && docker-php-ext-install mysqli pdo pdo_mysql intl \
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -23,4 +28,3 @@ RUN printf '<Directory /var/www/html/public>\n\
 RUN a2enconf codeigniter
 
 EXPOSE 80
-
