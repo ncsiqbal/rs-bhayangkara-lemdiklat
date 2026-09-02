@@ -328,27 +328,24 @@
         <span>Dokter</span>
     </a>
 
-
     <a
-        href="#"
+        href="<?= base_url('/admin/schedules') ?>"
         class="menu-item"
-    >
+>
         <i class="bi bi-calendar2-week"></i>
         <span>Jadwal Dokter</span>
     </a>
 
-
     <a
-        href="#"
+        href="<?= base_url('/admin/polyclinics') ?>"
         class="menu-item"
     >
         <i class="bi bi-hospital"></i>
         <span>Unit & Poli</span>
     </a>
 
-
     <a
-        href="#"
+        href="<?= base_url('/admin/galleries') ?>"
         class="menu-item"
     >
         <i class="bi bi-images"></i>
@@ -538,21 +535,30 @@
                     <i class="bi bi-arrow-right"></i>
                 </a>
 
-                <a href="#" class="quick-action">
+                <a
+                    href="<?= base_url('/admin/schedules') ?>"
+                    class="quick-action"
+                >
                     Kelola Jadwal Dokter
                     <i class="bi bi-arrow-right"></i>
                 </a>
 
-                <a href="#" class="quick-action">
+                <a
+                    href="<?= base_url('/admin/polyclinics') ?>"
+                    class="quick-action"
+                >
                     Kelola Unit & Poli
                     <i class="bi bi-arrow-right"></i>
                 </a>
 
-                <a href="#" class="quick-action">
+                <a
+                    href="<?= base_url('/admin/galleries') ?>"
+                    class="quick-action"
+                >
                     Kelola Galeri
                     <i class="bi bi-arrow-right"></i>
                 </a>
-
+                
             </div>
 
         </div>
