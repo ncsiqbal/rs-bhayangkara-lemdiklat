@@ -275,6 +275,11 @@ Browser
 
 Admin CMS menggunakan controller dan view terpisah dari public website untuk menjaga struktur aplikasi tetap terorganisir.
 
+## LIVE DEMO: 
+https://rs-bhayangkara-lemdiklat-production.up.railway.app
+
+
+
 ## Development Notes
 
 Project ini dibuat sebagai technical test untuk posisi IT di Rumah Sakit Bhayangkara Lemdiklat.
