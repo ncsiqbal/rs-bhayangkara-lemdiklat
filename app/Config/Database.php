@@ -52,12 +52,12 @@ class Database extends Config
     {
         parent::__construct();
 
-        $this->default['hostname'] = env('database.default.hostname', 'localhost');
-        $this->default['username'] = env('database.default.username', '');
-        $this->default['password'] = env('database.default.password', '');
-        $this->default['database'] = env('database.default.database', '');
-        $this->default['DBDriver'] = env('database.default.DBDriver', 'MySQLi');
+        $this->default['hostname'] = getenv('DB_HOST') ?: 'localhost';
+        $this->default['username'] = getenv('DB_USER') ?: '';
+        $this->default['password'] = getenv('DB_PASS') ?: '';
+        $this->default['database'] = getenv('DB_NAME') ?: '';
+        $this->default['DBDriver'] = 'MySQLi';
+        $this->default['port'] = (int) (getenv('DB_PORT') ?: 3306);
         $this->default['DBDebug'] = ENVIRONMENT !== 'production';
-        $this->default['port'] = (int) env('database.default.port', 3306);
     }
 }
