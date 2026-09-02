@@ -5,8 +5,11 @@ WORKDIR /var/www/html
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libicu-dev \
+        libzip-dev \
         pkg-config \
-    && docker-php-ext-install mysqli pdo pdo_mysql intl \
+        zip \
+        unzip \
+    && docker-php-ext-install mysqli pdo pdo_mysql intl zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
