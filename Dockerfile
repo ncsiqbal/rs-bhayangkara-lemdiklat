@@ -11,6 +11,8 @@ RUN apt-get update \
         unzip \
     && docker-php-ext-install mysqli pdo pdo_mysql intl zip \
     && a2enmod rewrite \
+    && a2dismod mpm_event mpm_worker 2>/dev/null || true \
+    && a2enmod mpm_prefork \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -31,3 +33,5 @@ RUN printf '<Directory /var/www/html/public>\n\
 RUN a2enconf codeigniter
 
 EXPOSE 80
+
+CMD ["bash", "-c", "a2dismod mpm_event mpm_worker 2>/dev/null || true; a2enmod mpm_prefork; apache2ctl -t; exec apache2-foreground"]
