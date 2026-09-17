@@ -22,6 +22,6 @@ class DoctorSchedule extends Model
         'end_time',
         'status',
     ];
-
+    
     protected $useTimestamps = true;
 }

@@ -803,7 +803,7 @@
             </div>
 
             <div class="col-lg-3">
-                <div class="footer-title">Technical Test</div>
+                <div class="footer-title">Demo Website</div>
 
                 <p>
                     Website demonstrasi yang dikembangkan
